@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+   <children>
+      <AnchorPane prefHeight="106.0" prefWidth="1018.0" style="-fx-border-color: #000; -fx-background-color: #E4E4E4;">
+         <children>
+            <Label fx:id="label_welcome" layoutX="827.0" layoutY="39.0" text="foulen">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_nav_accueil" layoutX="50.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #bfe6ff;" text="Accueil" />
+            <Button fx:id="button_nav_forum" layoutX="220.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Forum" />
+            <Button fx:id="button_nav_bib" layoutX="418.0" layoutY="29.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="102.0" text="Bibliothèque" />
+            <Button fx:id="button_nav_notif" layoutX="560.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Reservation Events" />
+            <ImageView fx:id="profile_image" fitHeight="70.0" fitWidth="70.0" layoutX="733.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/avatar.png" />
+               </image></ImageView>
+            <VBox layoutX="922.0" layoutY="75.0" prefHeight="20.0" prefWidth="96.0" />
+            <MenuBar fx:id="menubar" layoutX="921.0" layoutY="37.0" prefHeight="25.0" prefWidth="70.0">
+              <menus>
+                  <Menu fx:id="customMenu" mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem fx:id="item_compte" mnemonicParsing="false" text="Gerer compte" />
+                        <MenuItem fx:id="item_parametre" mnemonicParsing="false" text="Parametre" />
+                        <MenuItem fx:id="item_logout" mnemonicParsing="false" text="Logout" />
+                    </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <MenuBar fx:id="menubar1" layoutX="367.0" layoutY="22.0" prefHeight="55.0" prefWidth="168.0">
+               <menus>
+                  <Menu fx:id="customMenu1" mnemonicParsing="false" text="Bibliothèque">
+                     <items>
+                        <MenuItem fx:id="item_jeu1" mnemonicParsing="false" text="Ajouter Jeux" />
+                        <MenuItem fx:id="item_event2" mnemonicParsing="false" text="Ajouter Event" />
+                        <MenuItem fx:id="item_annonce1" mnemonicParsing="false" text="Ajouter Annonce" />
+                     </items>
+                  </Menu>
+               </menus>
+               <padding>
+                  <Insets left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <BorderPane prefHeight="594.0" prefWidth="1020.0">
+         <top>
+            <Label text="Recently Added" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <VBox prefHeight="454.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <HBox fx:id="cardgame" prefHeight="200.0" prefWidth="1018.0">
+                           <children>
+                              <ImageView fx:id="view_1" fitHeight="185.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="view_2" fitHeight="185.0" fitWidth="211.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="view_3" fitHeight="185.0" fitWidth="211.0" layoutX="221.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="view_4" fitHeight="185.0" fitWidth="211.0" layoutX="432.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="view_5" fitHeight="185.0" fitWidth="211.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</VBox>

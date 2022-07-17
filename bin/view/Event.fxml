@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventController">
+   <children>
+      <AnchorPane prefHeight="96.0" prefWidth="574.0">
+         <children>
+            <Label fx:id="label_welcome" layoutX="827.0" layoutY="39.0" text="foulen">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_logout" layoutX="916.0" layoutY="36.0" mnemonicParsing="false" text="logout" />
+            <Button fx:id="button_nav_accueil" layoutX="50.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Accueil" />
+            <Button fx:id="button_nav_forum" layoutX="220.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Forum" />
+            <Button fx:id="button_nav_bib" layoutX="390.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #bfe6ff;" text="Bibliothèque" />
+            <Button fx:id="button_nav_notif" layoutX="560.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Reservation Events" />
+            <ImageView fx:id="profile_image" fitHeight="70.0" fitWidth="70.0" layoutX="733.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/avatar.png" />
+               </image></ImageView>
+            <MenuBar fx:id="menubar1" layoutX="369.0" layoutY="20.0" prefHeight="55.0" prefWidth="168.0">
+               <menus>
+                  <Menu fx:id="customMenu1" mnemonicParsing="false" text="Bibliothèque">
+                     <items>
+                        <MenuItem fx:id="item_jeu1" mnemonicParsing="false" text="Ajouter Jeux" />
+                        <MenuItem fx:id="item_event2" mnemonicParsing="false" text="Ajouter Event" />
+                        <MenuItem fx:id="item_annonce1" mnemonicParsing="false" text="Ajouter Annonce" />
+                     </items>
+                  </Menu>
+               </menus>
+               <padding>
+                  <Insets left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="621.0" prefWidth="1000.0">
+         <children>
+            <AnchorPane prefHeight="620.0" prefWidth="1000.0" style="-fx-background-color: #dce9ef;">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Liste des événements" textFill="#2084d0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="TableEventList" layoutX="343.0" layoutY="99.0" prefHeight="460.0" prefWidth="643.0">
+                    <columns>
+                      <TableColumn fx:id="eventName" prefWidth="113.0" text="Nom Evenement" />
+                      <TableColumn fx:id="dateDebut" prefWidth="94.0" text="Date debut " />
+                        <TableColumn fx:id="dateFin" prefWidth="102.0" text="Date Fin" />
+                        <TableColumn fx:id="TrancheAge" prefWidth="92.0" text="Tranche d'age " />
+                        <TableColumn fx:id="adresseEvent" prefWidth="75.0" text="adresse " />
+                        <TableColumn fx:id="action" prefWidth="166.0" text="Action" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="693.0" layoutY="18.0" prefHeight="17.0" prefWidth="59.0" text="rechercher" textFill="#2084d0" />
+                  <TextField fx:id="filterFiled" layoutX="760.0" layoutY="14.0" />
+                  <AnchorPane layoutX="25.0" layoutY="82.0" prefHeight="524.0" prefWidth="289.0" style="-fx-background-color: #3286aa;">
+                     <children>
+                        <TextField fx:id="nameEvent" layoutX="126.0" layoutY="14.0" />
+                        <TextField fx:id="adresseEvente" layoutX="126.0" layoutY="239.0" />
+                        <TextField fx:id="despEvent" layoutX="126.0" layoutY="420.0" />
+                        <TextField fx:id="nbReservation" layoutX="126.0" layoutY="364.0" />
+                        <TextField fx:id="nb_participant" layoutX="126.0" layoutY="303.0" />
+                        <TextField fx:id="tanche_Age" layoutX="126.0" layoutY="182.0" />
+                        <Label layoutX="16.0" layoutY="18.0" text="Nom Evenement" textFill="#fffdfd">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="22.0" layoutY="76.0" text="Date debut" textFill="WHITE" />
+                        <Label layoutX="27.0" layoutY="134.0" text="Date Fin" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label layoutX="16.0" layoutY="185.0" text="Tranche d&quot;age" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="28.0" layoutY="242.0" text="Adresse" textFill="#f8f6f6">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="40.0" layoutY="294.0" text="Nombre " textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="34.0" layoutY="313.0" text="participant" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="31.0" layoutY="374.0" text=" réservation" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Button fx:id="ajoute_Event" layoutX="47.0" layoutY="485.0" mnemonicParsing="false" text="Ajouter " />
+                        <Label layoutX="36.0" layoutY="361.0" text=" Nombre " textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="37.0" layoutY="423.0" text="Description " textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="date_Fin" layoutX="126.0" layoutY="132.0" prefHeight="25.0" prefWidth="149.0" />
+                        <DatePicker fx:id="date_debut" layoutX="126.0" layoutY="72.0" prefHeight="25.0" prefWidth="149.0" />
+                        <Button fx:id="UPDATE" layoutX="173.0" layoutY="485.0" mnemonicParsing="false" text="Update" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</VBox>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnnonceController">
+   <children>
+      <AnchorPane prefHeight="96.0" prefWidth="574.0">
+         <children>
+            <Label fx:id="label_welcome" layoutX="827.0" layoutY="39.0" text="foulen">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_logout" layoutX="916.0" layoutY="36.0" mnemonicParsing="false" text="logout" />
+            <Button fx:id="button_nav_accueil" layoutX="50.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Accueil" />
+            <Button fx:id="button_nav_forum" layoutX="220.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Forum" />
+            <Button fx:id="button_nav_bib" layoutX="390.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #bfe6ff;" text="Bibliothèque" />
+            <Button fx:id="button_nav_notif" layoutX="560.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Reservation Events" />
+            <ImageView fx:id="profile_image" fitHeight="70.0" fitWidth="70.0" layoutX="733.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/avatar.png" />
+               </image></ImageView>
+            <MenuBar fx:id="menubar1" layoutX="379.0" layoutY="20.0" prefHeight="55.0" prefWidth="168.0">
+               <menus>
+                  <Menu fx:id="customMenu1" mnemonicParsing="false" text="Bibliothèque">
+                     <items>
+                        <MenuItem fx:id="item_jeu1" mnemonicParsing="false" text="Ajouter Jeux" />
+                        <MenuItem fx:id="item_event2" mnemonicParsing="false" text="Ajouter Event" />
+                        <MenuItem fx:id="item_annonce1" mnemonicParsing="false" text="Ajouter Annonce" />
+                     </items>
+                  </Menu>
+               </menus>
+               <padding>
+                  <Insets left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="621.0" prefWidth="1000.0">
+         <children>
+            <AnchorPane prefHeight="620.0" prefWidth="1016.0" style="-fx-background-color: #bababa;">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Liste des annonces" textFill="#2084d0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="693.0" layoutY="18.0" prefHeight="17.0" prefWidth="59.0" text="rechercher" textFill="#f8f5f5" />
+                  <TextField fx:id="filterFiled" layoutX="760.0" layoutY="14.0" />
+                  <AnchorPane layoutX="25.0" layoutY="79.0" prefHeight="527.0" prefWidth="292.0">
+                     <children>
+                        <TextField fx:id="titlAnnonce" layoutX="126.0" layoutY="14.0" />
+                        <TextField fx:id="priceAn" layoutX="126.0" layoutY="210.0" />
+                        <TextField fx:id="ContentAn" layoutX="127.0" layoutY="284.0" />
+                        <Label layoutX="16.0" layoutY="18.0" text="title Annonce" textFill="#fffdfd">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="22.0" layoutY="76.0" text="Date de Creation" textFill="WHITE" />
+                        <Label layoutX="16.0" layoutY="185.0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="22.0" layoutY="213.0" text="Price" textFill="#f8f6f6">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="-10.0" layoutY="379.0" text="annonce_image" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                          
+                        <Button fx:id="ajoute_Annonce" layoutX="47.0" layoutY="485.0" mnemonicParsing="false" text="Ajouter " />
+                        <Button fx:id="UPDATE" layoutX="173.0" layoutY="485.0" mnemonicParsing="false" text="Update" />
+                        <Label layoutX="18.0" layoutY="150.0" text="annonce type" textFill="#ddd5d5" />
+                        <Label fx:id="annoncecontent" layoutX="-4.0" layoutY="287.0" text="annonce content" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dateCre" layoutX="114.0" layoutY="72.0" />
+                        <ComboBox fx:id="comboannonce" layoutX="112.0" layoutY="146.0" onAction="#Select" prefWidth="150.0" />
+                        <Button fx:id="imgAn" layoutX="161.0" layoutY="376.0" mnemonicParsing="false" onAction="#Addimg" text="upload" />
+                        <Label fx:id="urlSelected" alignment="CENTER" layoutX="30.0" layoutY="428.0" prefHeight="17.0" prefWidth="210.0" text="url Selected" />
+                     </children>
+                  </AnchorPane>
+                  <TableView fx:id="TableAnnonceListe" layoutX="334.0" layoutY="90.0" prefHeight="308.0" prefWidth="608.0">
+                    <columns>
+                      <TableColumn fx:id="titleAnnonce" prefWidth="87.0" text="title Annonce" />
+                      <TableColumn fx:id="DateCreate" prefWidth="114.0" text="Date de Creation" />
+                        <TableColumn fx:id="typeAnnonce" prefWidth="94.0" text="annonce type" />
+                        <TableColumn fx:id="Price" prefWidth="52.0" text="Price" />
+                        <TableColumn fx:id="annonceC" prefWidth="108.0" text="annonce content" />
+                        <TableColumn fx:id="action" prefWidth="152.0" text="action" />
+                    </columns>
+                  </TableView>
+                  <ImageView fx:id="imguploqd" fitHeight="150.0" fitWidth="200.0" layoutX="508.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</VBox>

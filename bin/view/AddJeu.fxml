@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddJeuController">
+   <children>
+      <AnchorPane prefHeight="74.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="button_logout" layoutX="934.0" layoutY="34.0" mnemonicParsing="false" text="logout" />
+            <Button fx:id="button_nav_accueil" layoutX="41.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Accueil" />
+            <Button fx:id="button_nav_forum" layoutX="199.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Forum" />
+            <Button fx:id="button_nav_bib" layoutX="358.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #bfe6ff;" text="Bibliothèque" />
+            <Button fx:id="button_nav_notif" layoutX="519.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Reservation Events" />
+            <ImageView fx:id="profile_image" fitHeight="70.0" fitWidth="70.0" layoutX="779.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/avatar.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="label_welcome" layoutX="876.0" layoutY="35.0" text="foulen">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <MenuBar fx:id="menubar1" layoutX="339.0" layoutY="13.0" prefHeight="55.0" prefWidth="168.0">
+               <menus>
+                  <Menu fx:id="customMenu1" mnemonicParsing="false" text="Bibliothèque">
+                     <items>
+                        <MenuItem fx:id="item_jeu1" mnemonicParsing="false" text="Ajouter Jeux" />
+                        <MenuItem fx:id="item_event2" mnemonicParsing="false" text="Ajouter Event" />
+                        <MenuItem fx:id="item_annonce1" mnemonicParsing="false" text="Ajouter Annonce" />
+                     </items>
+                  </Menu>
+               </menus>
+               <padding>
+                  <Insets left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </MenuBar>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="626.0" prefWidth="1000.0">
+         <children>
+            <Label layoutX="89.0" layoutY="92.0" text="Titre de Jeux" textFill="#f39659">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nametxt" layoutX="89.0" layoutY="119.0" opacity="0.9" prefHeight="27.0" prefWidth="202.0" />
+            <Label layoutX="89.0" layoutY="147.0" text="Catégorie" textFill="#f39659">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbcat" layoutX="89.0" layoutY="174.0" onMouseClicked="#addCat" prefHeight="27.0" prefWidth="202.0" />
+            <ImageView fx:id="img" fitHeight="409.0" fitWidth="337.0" layoutX="656.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="add" layoutX="514.0" layoutY="274.0" mnemonicParsing="false" onAction="#AddJeux" prefHeight="27.0" prefWidth="126.0" text="Add" />
+            <Button fx:id="upload" layoutX="42.0" layoutY="215.0" mnemonicParsing="false" onAction="#Addimg" prefHeight="27.0" prefWidth="126.0" text="Upload" />
+            <Label fx:id="lab_url" layoutX="171.0" layoutY="219.0" prefHeight="18.0" prefWidth="254.0" text="aucune selectionnée" />
+            <TableView fx:id="jeu" layoutX="21.0" layoutY="308.0" onMouseClicked="#getSelected" prefHeight="258.0" prefWidth="486.0">
+              <columns>
+                <TableColumn fx:id="id" prefWidth="54.399993896484375" text="ID" />
+                <TableColumn fx:id="cat" prefWidth="174.39999389648438" text="Catégorie" />
+                  <TableColumn fx:id="picture" prefWidth="137.60003662109375" text="Affiche" />
+                  <TableColumn fx:id="name" prefWidth="115.20001220703125" text="Titre Jeux" />
+              </columns>
+            </TableView>
+            <Button fx:id="afficher" layoutX="514.0" layoutY="308.0" mnemonicParsing="false" onAction="#ViewJeu" prefHeight="27.0" prefWidth="126.0" text="Afficher Jeux" />
+            <Button fx:id="update" layoutX="514.0" layoutY="344.0" mnemonicParsing="false" onAction="#Update" prefHeight="27.0" prefWidth="126.0" text="Update" />
+            <Button fx:id="delete" layoutX="514.0" layoutY="379.0" mnemonicParsing="false" onAction="#DeleteJeu" prefHeight="27.0" prefWidth="126.0" text="Delete" />
+            <Label layoutX="88.0" layoutY="28.0" text="ID" textFill="#f39659" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txt_id" layoutX="88.0" layoutY="55.0" opacity="0.9" prefHeight="27.0" prefWidth="70.0" visible="false" />
+            <TextField fx:id="Search" layoutX="23.0" layoutY="262.0" onAction="#search" promptText="Search" />
+            <TextField fx:id="txt_iduser" layoutX="201.0" layoutY="68.0" opacity="0.9" prefHeight="27.0" prefWidth="70.0" visible="false" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
