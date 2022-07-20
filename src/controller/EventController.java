@@ -405,7 +405,7 @@ TableEventList.setItems(FXCollections.observableArrayList(e1.getAllByUserConncet
 
                         }
 
-                        AlertModal.showInfoAlert("! evenement ajoutÃ© avec succÃ¨s ", "   evenement ajoutÃ© avec succÃ¨s!");
+                        AlertModal.showInfoAlert("! evenement ajouté avec succès ", "   evenement ajouté avec succès!");
 
                         nameEvent.setText(null);
                         date_debut.setValue(null);
@@ -428,31 +428,30 @@ TableEventList.setItems(FXCollections.observableArrayList(e1.getAllByUserConncet
          UPDATE.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            
-                    
-                        try {
-                            Event e;
-                            e = new Event(eventselected.getEventId(),nameEvent.getText(),Date.valueOf(date_debut.getValue()),Date.valueOf(date_Fin.getValue()),Integer.parseInt(tanche_Age.getText()),adresseEvente.getText(),Integer.parseInt(nb_participant.getText()),Integer.parseInt(nbReservation.getText()),despEvent.getText(),AuthService.loggedInUser.getUserId());
+            	
+            	try {
+                    Event e;
+                    e = new Event(eventselected.getEventId(),nameEvent.getText(),Date.valueOf(date_debut.getValue()),Date.valueOf(date_Fin.getValue()),Integer.parseInt(tanche_Age.getText()),adresseEvente.getText(),Integer.parseInt(nb_participant.getText()),Integer.parseInt(nbReservation.getText()),despEvent.getText(),AuthService.loggedInUser.getUserId());
 
-                            EventDAOImp eventService = new EventDAOImp();
+                    EventDAOImp eventService = new EventDAOImp();
 
-                            eventService.update(e);
-                            TableEventList.setItems(FXCollections.observableArrayList(eventService.getAll()));
+                    eventService.update(e);
+                    TableEventList.setItems(FXCollections.observableArrayList(eventService.getAll()));
 
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
 
-                        }
+                }
 
-                        AlertModal.showInfoAlert("! evenement update avec succÃ¨s ", "   evenement ajoutÃ© avec succÃ¨s!");
+                AlertModal.showInfoAlert("! evenement update avec succès ", "   evenement ajouté avec succès!");
 
 
-                    }
-                
-            
-
-        });
+            }
         
-    }
+    
+
+});
+
+}
 
 }

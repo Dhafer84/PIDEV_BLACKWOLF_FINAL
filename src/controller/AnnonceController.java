@@ -6,6 +6,7 @@
 package controller;
 
 import entity.Annonce;
+import entity.Event;
 import java.io.File;
 import java.net.URL;
 import java.sql.Date;
@@ -30,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,8 +43,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.swing.JOptionPane;
 import service.AnnonceDAOImp;
 import service.AuthService;
+import service.EventDAOImp;
+import service.JeuDAOImpl;
 import utils.AlertModal;
 import utils.SceneManager;
 
@@ -53,136 +58,142 @@ import utils.SceneManager;
  */
 public class AnnonceController implements Initializable {
 
-	@FXML
-	private Label label_welcome;
+      @FXML
+    private Label label_welcome;
 
-	@FXML
-	private Button button_logout;
+    @FXML
+    private Button button_logout;
 
-	@FXML
-	private Button button_nav_accueil;
+    @FXML
+    private Button button_nav_accueil;
 
-	@FXML
-	private Button button_nav_forum;
+    @FXML
+    private Button button_nav_forum;
 
-	@FXML
-	private Button button_nav_bib;
+    @FXML
+    private Button button_nav_bib;
 
-	@FXML
-	private Button button_nav_notif;
+    @FXML
+    private Button button_nav_notif;
 
-	@FXML
-	private TextField filterFiled;
+    @FXML
+    private TextField filterFiled;
 
-	@FXML
-	private TextField titlAnnonce;
+    @FXML
+    private TextField titlAnnonce;
 
-	@FXML
-	private TextField priceAn;
+    @FXML
+    private TextField priceAn;
 
-	@FXML
-	private TextField ContentAn;
+    @FXML
+    private TextField ContentAn;
 
-	@FXML
-	private Button ajoute_Annonce;
 
-	@FXML
-	private DatePicker dateCre;
+    @FXML
+    private Button ajoute_Annonce;
 
-	@FXML
-	private Button UPDATE;
+    @FXML
+    private DatePicker dateCre;
 
-	@FXML
-	private TableView<Annonce> TableAnnonceListe;
+    @FXML
+    private Button UPDATE;
 
-	@FXML
-	private TableColumn<Annonce, String> titleAnnonce;
+   
 
-	@FXML
-	private TableColumn<Annonce, Date> DateCreate;
+    @FXML
+    private TableView<Annonce> TableAnnonceListe;
 
-	@FXML
-	private TableColumn<Annonce, String> typeAnnonce;
+    @FXML
+    private TableColumn<Annonce, String> titleAnnonce;
 
-	@FXML
-	private TableColumn<Annonce, Integer> Price;
+    @FXML
+    private TableColumn<Annonce, Date> DateCreate;
 
-	@FXML
-	private TableColumn<Annonce, String> annonceC;
+    @FXML
+    private TableColumn<Annonce, String> typeAnnonce;
 
-	@FXML
-	private TableColumn<Annonce, Annonce> action;
+    @FXML
+    private TableColumn<Annonce, Integer> Price;
 
-	@FXML
-	private ComboBox<String> comboannonce;
+    @FXML
+    private TableColumn<Annonce, String> annonceC;
 
-	@FXML
-	private Button imgAn;
+    @FXML
+    private TableColumn<Annonce, Annonce> action;
+    
+     @FXML
+    private ComboBox <String> comboannonce;
+     
+        @FXML
+    private Button imgAn;
 
-	@FXML
-	private Label urlSelected;
+    @FXML
+    private Label urlSelected;
 
-	@FXML
-	private ImageView imguploqd;
+     @FXML
+    private ImageView imguploqd;
+     @FXML
+ 	private ImageView profile_image;
 
-	@FXML
-	private ImageView profile_image;
+ 	@FXML
+ 	private Menu customMenu1;
 
-	@FXML
-	private Menu customMenu1;
+ 	@FXML
+ 	private MenuItem item_event2;
 
-	@FXML
-	private MenuItem item_event2;
+ 	@FXML
+ 	private MenuItem item_jeu1;
 
-	@FXML
-	private MenuItem item_jeu1;
+ 	@FXML
+ 	private MenuItem item_annonce1;
 
-	@FXML
-	private MenuItem item_annonce1;
+ 	@FXML
+ 	private MenuBar menubar1;
 
-	@FXML
-	private MenuBar menubar1;
-
-	@FXML
-	private ComboBox<String> dropdownmenu1;
-
-	@FXML
+ 	@FXML
+ 	private ComboBox<String> dropdownmenu1;
+     
+      @FXML
 	void Addimg(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("image Files", "*.jpg", "*.png"));
 		File f = fc.showOpenDialog(null);
 		if (f != null) {
 			urlSelected.setText(f.getAbsolutePath());
-			// lab_url.setText(f.getPath());
+			//lab_url.setText(f.getPath());
 			Image image = new Image(f.toURI().toString(), 270, 225, true, true);
 			imguploqd.setImage(image);
 		}
 
 	}
 
-	@FXML
-	void Select(ActionEvent event) {
-		String s = comboannonce.getSelectionModel().getSelectedItem().toString();
 
-	}
+   
+    
+    
+@FXML
+    void Select(ActionEvent event) {
+        String s =comboannonce.getSelectionModel().getSelectedItem().toString();
 
-	Annonce annonceselected;
+    }
+    Annonce annonceselected;
 
-	ObservableList<Annonce> listAnnonce;
+    ObservableList<Annonce> listAnnonce;
 
-	/**
-	 * Initializes the controller class.
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		label_welcome.setText(AuthService.loggedInUser.getFirstName());
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+    	label_welcome.setText(AuthService.loggedInUser.getFirstName());
 		if (AuthService.loggedInUser.getUserImage().equals("")) {
 			AuthService.loggedInUser.setUserImage("avatar.png");
 		}
 		String imageSource = "http://localhost:3030/api/v1/users/image/" + AuthService.loggedInUser.getUserImage();
 		profile_image.setImage(new Image(imageSource));
 
-		customMenu1.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+		
+    	customMenu1.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				String targetElement = event.getTarget().toString();
@@ -207,243 +218,252 @@ public class AnnonceController implements Initializable {
 				}
 			}
 		});
+        button_logout.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                AuthService.logout();
+                SceneManager.changeScene(event, "login.fxml", "Login", null);
+            }
+        });
 
-		button_logout.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				AuthService.logout();
-				SceneManager.changeScene(event, "login.fxml", "Login", null);
-			}
-		});
+        button_nav_accueil.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SceneManager.changeScene(event, "home.fxml", "Forum", null);
+            }
+        });
 
-		button_nav_accueil.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				SceneManager.changeScene(event, "home.fxml", "Forum", null);
-			}
-		});
-
-		button_nav_notif.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+        button_nav_notif.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				SceneManager.changeScene(event, "EventListAccueil.fxml", "EventList", null);
 			}
 		});
 
-		button_nav_forum.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				SceneManager.changeScene(event, "forum.fxml", "Forum", null);
-			}
-		});
+        button_nav_forum.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SceneManager.changeScene(event, "forum.fxml", "Forum", null);
+            }
+        });
+        
+        
+         ObservableList<String> list =FXCollections.observableArrayList("echange","vente");
+        comboannonce.setItems(list);
+        
 
-		ObservableList<String> list = FXCollections.observableArrayList("echange", "vente");
-		comboannonce.setItems(list);
+        // TODO
+        
+        buildTableAndData();
+    }
 
-		// TODO
+    private void buildTableAndData() {
+        //add haifa
+        AnnonceDAOImp a1 = new AnnonceDAOImp();
+        titleAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_title"));
+      DateCreate.setCellValueFactory(new PropertyValueFactory<>("annonce_created_at"));
+        typeAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_type"));
+        Price.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+       
+        annonceC.setCellValueFactory(new PropertyValueFactory<>("annonce_content"));
+        
 
-		buildTableAndData();
-	}
+        List<Annonce> list = new ArrayList<>();
+        try {
+            list = a1.getAll();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        listAnnonce = FXCollections.observableArrayList(list);
+        System.out.println(list);
 
-	private void buildTableAndData() {
-		// add haifa
-		AnnonceDAOImp a1 = new AnnonceDAOImp();
-		titleAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_title"));
-		DateCreate.setCellValueFactory(new PropertyValueFactory<>("annonce_created_at"));
-		typeAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_type"));
-		Price.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+         titleAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_title"));
+        DateCreate.setCellValueFactory(new PropertyValueFactory<>("annonce_created_at"));
+        typeAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_type"));
+        Price.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+        
+        annonceC.setCellValueFactory(new PropertyValueFactory<>("annonce_content"));
+        TableAnnonceListe.setItems(FXCollections.observableArrayList(listAnnonce));
 
-		annonceC.setCellValueFactory(new PropertyValueFactory<>("annonce_content"));
+        // Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Annonce> filteredData = new FilteredList<>(listAnnonce, b -> true);
 
-		List<Annonce> list = new ArrayList<>();
-		try {
-			list = a1.getAll();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		listAnnonce = FXCollections.observableArrayList(list);
-		System.out.println(list);
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterFiled.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(event -> {
+                // If filter text is empty, display all persons.
 
-		titleAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_title"));
-		DateCreate.setCellValueFactory(new PropertyValueFactory<>("annonce_created_at"));
-		typeAnnonce.setCellValueFactory(new PropertyValueFactory<>("annonce_type"));
-		Price.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
-		annonceC.setCellValueFactory(new PropertyValueFactory<>("annonce_content"));
-		TableAnnonceListe.setItems(FXCollections.observableArrayList(listAnnonce));
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
 
-		// Wrap the ObservableList in a FilteredList (initially display all data).
-		FilteredList<Annonce> filteredData = new FilteredList<>(listAnnonce, b -> true);
+                if (event.getAnnonce_title().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches first name.
+                } else if (event.getAnnonce_type().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
 
-		// 2. Set the filter Predicate whenever the filter changes.
-		filterFiled.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(event -> {
-				// If filter text is empty, display all persons.
+                } else {
+                    return false; // Does not match.
+                }
+            });
+        }
+        );
 
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<Annonce> sortedData = new SortedList<>(filteredData);
 
-				// Compare first name and last name of every person with filter text.
-				String lowerCaseFilter = newValue.toLowerCase();
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 	  Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty()
+                .bind(TableAnnonceListe.comparatorProperty());
 
-				if (event.getAnnonce_title().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; // Filter matches first name.
-				} else if (event.getAnnonce_type().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; // Filter matches last name.
+        // 5. Add sorted (and filtered) data to the table.
+        TableAnnonceListe.setItems(sortedData);
 
-				} else {
-					return false; // Does not match.
-				}
-			});
-		});
+        Callback<TableColumn<Annonce, Annonce>, TableCell<Annonce, Annonce>> cellFactory = new Callback<TableColumn<Annonce, Annonce>, TableCell<Annonce, Annonce>>() {
+            @Override
+            public TableCell call(final TableColumn<Annonce, Annonce> param) {
+                final TableCell<Annonce, Annonce> cell = new TableCell<Annonce, Annonce>() {
 
-		// 3. Wrap the FilteredList in a SortedList.
-		SortedList<Annonce> sortedData = new SortedList<>(filteredData);
+                    @Override
+                    public void updateItem(Annonce item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            final Button editBtn = new Button("UPDATE");
+                            final Button dltBtn = new Button("DELETE");
+                            editBtn.setOnAction((ActionEvent event) -> {
+                                //  saveButton.setText("UPDATE");
+                                annonceselected = getTableView().getItems().get(getIndex());
+                                titlAnnonce.setText(annonceselected.getAnnonce_title());
+                                dateCre.setValue((annonceselected.getAnnonce_created_at()).toLocalDate());
+                                priceAn.setText(String.valueOf(annonceselected.getTotal_price()));
+                               ContentAn.setText(String.valueOf(annonceselected.getAnnonce_content()));
 
-		// 4. Bind the SortedList comparator to the TableView comparator.
-		// Otherwise, sorting the TableView would have no effect.
-		sortedData.comparatorProperty().bind(TableAnnonceListe.comparatorProperty());
 
-		// 5. Add sorted (and filtered) data to the table.
-		TableAnnonceListe.setItems(sortedData);
 
-		Callback<TableColumn<Annonce, Annonce>, TableCell<Annonce, Annonce>> cellFactory = new Callback<TableColumn<Annonce, Annonce>, TableCell<Annonce, Annonce>>() {
-			@Override
-			public TableCell call(final TableColumn<Annonce, Annonce> param) {
-				final TableCell<Annonce, Annonce> cell = new TableCell<Annonce, Annonce>() {
+                                comboannonce.setValue(annonceselected.getAnnonce_type());
 
-					@Override
-					public void updateItem(Annonce item, boolean empty) {
-						super.updateItem(item, empty);
-						if (empty) {
-							setGraphic(null);
-							setText(null);
-						} else {
-							final Button editBtn = new Button("UPDATE");
-							final Button dltBtn = new Button("DELETE");
-							editBtn.setOnAction((ActionEvent event) -> {
-								// saveButton.setText("UPDATE");
-								annonceselected = getTableView().getItems().get(getIndex());
-								titlAnnonce.setText(annonceselected.getAnnonce_title());
-								dateCre.setValue((annonceselected.getAnnonce_created_at()).toLocalDate());
-								priceAn.setText(String.valueOf(annonceselected.getTotal_price()));
-								ContentAn.setText(String.valueOf(annonceselected.getAnnonce_content()));
+                                //TotalPriceAn.setText(annonceselected.getTotal_price());
+                              
+                                try {
 
-								comboannonce.setValue(annonceselected.getAnnonce_type());
+                                    a1.update(annonceselected);
+                                    // passwordField.setText( eventselected.getPassword());
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(AnnonceController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 
-								// TotalPriceAn.setText(annonceselected.getTotal_price());
+                            });
+                            dltBtn.setOnAction(event -> {
+                                try {
+                                    annonceselected = getTableView().getItems().get(getIndex());
 
-								try {
+                                    System.out.println("test" + annonceselected);
+                                    a1.delete(annonceselected);
+                                    TableAnnonceListe.setItems(FXCollections.observableArrayList(a1.getAll()));
 
-									a1.update(annonceselected);
-									// passwordField.setText( eventselected.getPassword());
-								} catch (SQLException ex) {
-									Logger.getLogger(AnnonceController.class.getName()).log(Level.SEVERE, null, ex);
-								}
+                                    AlertModal.showErrorAlert(null, "your annonce is delete!");
 
-							});
-							dltBtn.setOnAction(event -> {
-								try {
-									annonceselected = getTableView().getItems().get(getIndex());
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(AnnonceController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 
-									System.out.println("test" + annonceselected);
-									a1.delete(annonceselected);
-									TableAnnonceListe.setItems(FXCollections.observableArrayList(a1.getAll()));
+                            });
 
-									AlertModal.showErrorAlert(null, "your annonce is delete!");
+                            HBox hb = new HBox();
+                            hb.setSpacing(2);
+                            hb.getChildren().addAll(editBtn, dltBtn);
+                            setGraphic(hb);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
 
-								} catch (SQLException ex) {
-									Logger.getLogger(AnnonceController.class.getName()).log(Level.SEVERE, null, ex);
-								}
+            }
+        };
 
-							});
+        action.setCellFactory(cellFactory);
 
-							HBox hb = new HBox();
-							hb.setSpacing(2);
-							hb.getChildren().addAll(editBtn, dltBtn);
-							setGraphic(hb);
-							setText(null);
-						}
-					}
-				};
-				return cell;
+        //addd
+        ajoute_Annonce.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (titlAnnonce.getText().trim().isEmpty() || priceAn.getText().trim().isEmpty()
+                      || ContentAn.getText().trim().isEmpty()) {
+                    AlertModal.showErrorAlert(null, "Please fill in all information to add annonce!");
+                } 
+                if ( !priceAn.getText().matches("[0-9]+")) {
+                    AlertModal.showErrorAlert("Price" , "Please must be number !");
+                
+                }
+                else {
+                    {
+                        try {
+                            Annonce a;
+                            a = new Annonce.AnnonceBuilder().annonce_type(comboannonce.getValue()).annonce_created_at(Date.valueOf(dateCre.getValue())).annonce_title(titlAnnonce.getText()).annonce_content(ContentAn.getText())
+                                    .total_price(Integer.parseInt(priceAn.getText())).annonce_image(urlSelected.getText()).jeu_id(1).userId(AuthService.loggedInUser.getUserId()).build();
 
-			}
-		};
+                            AnnonceDAOImp eventService = new AnnonceDAOImp();
 
-		action.setCellFactory(cellFactory);
+                            eventService.insert(a);
+                            TableAnnonceListe.setItems(FXCollections.observableArrayList(eventService.getAll()));
 
-		// addd
-		ajoute_Annonce.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (titlAnnonce.getText().trim().isEmpty() || priceAn.getText().trim().isEmpty()
-						|| ContentAn.getText().trim().isEmpty()) {
-					AlertModal.showErrorAlert(null, "Please fill in all information to add annonce!");
-				} else {
-					{
-						try {
-							Annonce a;
-							a = new Annonce.AnnonceBuilder().annonce_type(comboannonce.getValue())
-									.annonce_created_at(Date.valueOf(dateCre.getValue()))
-									.annonce_title(titlAnnonce.getText()).annonce_content(ContentAn.getText())
-									.total_price(Integer.parseInt(priceAn.getText()))
-									.annonce_image(urlSelected.getText()).jeu_id(1)
-									.userId(AuthService.loggedInUser.getUserId()).build();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
 
-							AnnonceDAOImp eventService = new AnnonceDAOImp();
+                        }
 
-							eventService.insert(a);
-							TableAnnonceListe.setItems(FXCollections.observableArrayList(eventService.getAll()));
+                        AlertModal.showInfoAlert("! annonce ajouté avec succès ", "   annonce ajouté avec succès!");
 
-						} catch (SQLException e) {
-							e.printStackTrace();
+                        titlAnnonce.setText(null);
+                        dateCre.setValue(null);
+                         ContentAn.setText(null);
 
-						}
+                     //   comboannonce.setValue(null);
+                        priceAn.setText(null);
+                        urlSelected.setText(null);
+                        imguploqd.setImage(null);
 
-						AlertModal.showInfoAlert("! annonce ajoutÃ© avec succÃ¨s ", "   annonce ajoutÃ© avec succÃ¨s!");
+                    }
+                }
+            }
 
-						titlAnnonce.setText(null);
-						dateCre.setValue(null);
-						ContentAn.setText(null);
+        });
+        //UPDATE
+         UPDATE.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+           
+                    
+                        try {
+                            Annonce a;
+                            a = new Annonce(annonceselected.getAnnonce_id(),comboannonce.getValue(),Date.valueOf(dateCre.getValue()),Integer.parseInt(priceAn.getText()),imgAn.getText(),ContentAn.getText(),titlAnnonce.getText(),AuthService.loggedInUser.getUserId(),1);
+                            System.out.println(".handle()"+a);
+                            AnnonceDAOImp eventService = new AnnonceDAOImp();
+                            eventService.update(a);
+                            TableAnnonceListe.setItems(FXCollections.observableArrayList(eventService.getAll()));
 
-						// comboannonce.setValue(null);
-						priceAn.setText(null);
-						urlSelected.setText(null);
-						imguploqd.setImage(null);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
 
-					}
-				}
-			}
+                        }
 
-		});
-		// UPDATE
-		UPDATE.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
+                        AlertModal.showInfoAlert("! annonce update avec succès ", "   annonce ajouté avec succès!");
 
-				try {
-					Annonce a;
-					a = new Annonce(annonceselected.getAnnonce_id(), comboannonce.getValue(),
-							Date.valueOf(dateCre.getValue()), Integer.parseInt(priceAn.getText()), imgAn.getText(),
-							ContentAn.getText(), titlAnnonce.getText(), AuthService.loggedInUser.getUserId(), 1);
-					System.out.println(".handle()" + a);
-					AnnonceDAOImp eventService = new AnnonceDAOImp();
-					eventService.update(a);
-					TableAnnonceListe.setItems(FXCollections.observableArrayList(eventService.getAll()));
+                      
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+                    }
+      
 
-				}
-
-				AlertModal.showInfoAlert("! annonce update avec succÃ¨s ", "   annonce ajoutÃ© avec succÃ¨s!");
-
-			}
-
-		});
-	}
+        });
+    }
 
 }

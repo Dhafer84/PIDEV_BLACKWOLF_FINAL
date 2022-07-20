@@ -191,150 +191,150 @@ public class EventListAccueilController implements Initializable {
 		});
         
         
-         //add melek
-        EventDAOImp e1 = new EventDAOImp();
-        nameEvent.setCellValueFactory(new PropertyValueFactory<>("eventName"));
-        dateDebut.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
-        dateFin.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
-        tancheAge.setCellValueFactory(new PropertyValueFactory<>("eventAgeRange"));
-        adresse.setCellValueFactory(new PropertyValueFactory<>("eventAddress"));
-           nbMax.setCellValueFactory(new PropertyValueFactory<>("eventMaxNumberParticipant"));
+  //add melek
+    EventDAOImp e1 = new EventDAOImp();
+    nameEvent.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+    dateDebut.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+    dateFin.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+    tancheAge.setCellValueFactory(new PropertyValueFactory<>("eventAgeRange"));
+    adresse.setCellValueFactory(new PropertyValueFactory<>("eventAddress"));
+       nbMax.setCellValueFactory(new PropertyValueFactory<>("eventMaxNumberParticipant"));
 
-        List<Event> list = new ArrayList<>();
-        try {
-            list = e1.getAll();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        listEvent = FXCollections.observableArrayList(list);
-        System.out.println(list);
+    List<Event> list = new ArrayList<>();
+    try {
+        list = e1.getAll();
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    listEvent = FXCollections.observableArrayList(list);
+    System.out.println(list);
 //idevent.setVisible(false);
-      nameEvent.setCellValueFactory(new PropertyValueFactory<>("eventName"));
-        dateDebut.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
-        dateFin.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
-        tancheAge.setCellValueFactory(new PropertyValueFactory<>("eventAgeRange"));
-        adresse.setCellValueFactory(new PropertyValueFactory<>("eventAddress"));
-           nbMax.setCellValueFactory(new PropertyValueFactory<>("eventMaxNumberParticipant"));
+  nameEvent.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+    dateDebut.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+    dateFin.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+    tancheAge.setCellValueFactory(new PropertyValueFactory<>("eventAgeRange"));
+    adresse.setCellValueFactory(new PropertyValueFactory<>("eventAddress"));
+       nbMax.setCellValueFactory(new PropertyValueFactory<>("eventMaxNumberParticipant"));
 
-        tableEventListe.setItems(FXCollections.observableArrayList(listEvent));
+    tableEventListe.setItems(FXCollections.observableArrayList(listEvent));
 
-        // Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Event> filteredData = new FilteredList<>(listEvent, b -> true);
+    // Wrap the ObservableList in a FilteredList (initially display all data).
+    FilteredList<Event> filteredData = new FilteredList<>(listEvent, b -> true);
 
-        // 2. Set the filter Predicate whenever the filter changes.
-        filterFiled.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(event -> {
-                // If filter text is empty, display all persons.
+    // 2. Set the filter Predicate whenever the filter changes.
+    filterFiled.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(event -> {
+            // If filter text is empty, display all persons.
 
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
 
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
+            // Compare first name and last name of every person with filter text.
+            String lowerCaseFilter = newValue.toLowerCase();
 
-                if (event.getEventName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true; // Filter matches first name.
-                } else if (event.getEventAddress().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true; // Filter matches last name.
-                } else if (String.valueOf(event.getEventAgeRange()).indexOf(lowerCaseFilter) != -1) {
-                    return true;
-                } else {
-                    return false; // Does not match.
-                }
-            });
-        }
-        );
+            if (event.getEventName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                return true; // Filter matches first name.
+            } else if (event.getEventAddress().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                return true; // Filter matches last name.
+            } else if (String.valueOf(event.getEventAgeRange()).indexOf(lowerCaseFilter) != -1) {
+                return true;
+            } else {
+                return false; // Does not match.
+            }
+        });
+    }
+    );
 
-        // 3. Wrap the FilteredList in a SortedList. 
-        SortedList<Event> sortedData = new SortedList<>(filteredData);
+    // 3. Wrap the FilteredList in a SortedList. 
+    SortedList<Event> sortedData = new SortedList<>(filteredData);
 
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        // 	  Otherwise, sorting the TableView would have no effect.
-        sortedData.comparatorProperty()
-                .bind(tableEventListe.comparatorProperty());
+    // 4. Bind the SortedList comparator to the TableView comparator.
+    // 	  Otherwise, sorting the TableView would have no effect.
+    sortedData.comparatorProperty()
+            .bind(tableEventListe.comparatorProperty());
 
-        // 5. Add sorted (and filtered) data to the table.
-        tableEventListe.setItems(sortedData);
+    // 5. Add sorted (and filtered) data to the table.
+    tableEventListe.setItems(sortedData);
 
-        Callback<TableColumn<Event, Event>, TableCell<Event, Event>> cellFactory;
-           cellFactory = new Callback<TableColumn<Event, Event>, TableCell<Event, Event>>() {
-               @Override
-               public TableCell call(final TableColumn<Event, Event> param) {
-                   final TableCell<Event, Event> cell;
-                   cell = new TableCell<Event, Event>() {
-                       
-                       @Override
-                       public void updateItem(Event item, boolean empty) {
-                           super.updateItem(item, empty);
-                           if (empty) {
-                               setGraphic(null);
-                               setText(null);
-                           } else {
-                               Button editBtn = new Button("Reserver");
-                            
-                              
-                                   editBtn.setOnAction((ActionEvent event) -> {
-                                       
-                                eventselected = getTableView().getItems().get(getIndex());
-
-                                       Integer user_id= AuthService.loggedInUser.getUserId();
-                                       System.out.println("user"+user_id);
-                                       Integer event_id=getTableView().getItems().get(getIndex()).getEventId();
-                                       System.out.println("even"+event_id);
-                                       UserDAOImpl us= new UserDAOImpl();
-                                       User u1 = null;
-									try {
-										u1 = us.get(user_id);
-									} catch (SQLException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-                                      EventDAOImp ev = new EventDAOImp();
-                                      Event e12 =ev.get(event_id);
-                           reservation r = new reservation(u1,e12);
-
-                            ReservationDAOImpl reservationService = new ReservationDAOImpl();
-
-                                   try {
-                                      // System.out.println(".updateItem()"+r);
-                                       reservationService.insert(r);
-                                       // sendSMS sm =new sendSMS();
-                                        //sm.sendSMS();
-                                        eventselected.setEventMaxNumberParticipant(eventselected.getEventMaxNumberParticipant() -1);
-                                        System.out.println(".updateItem()0 " + eventselected.getEventMaxNumberParticipant());
-                                         if(eventselected.getEventMaxNumberParticipant()< 0 ){
-                                 
-                                    editBtn.setDisable(true);
-
-                              }
-                        System.out.println(".updateItem()"+ eventselected.getEventMaxNumberParticipant());
-
-                                   } catch (SQLException ex) {
-                                       Logger.getLogger(EventListAccueilController.class.getName()).log(Level.SEVERE, null, ex);
-                                   }
-                            
-                                   }); 
-                                   
-                           
-                         
-                           
-                           
-                           HBox hb = new HBox();
-                           hb.setSpacing(2);
-                           hb.getChildren().addAll(editBtn);
-                           setGraphic(hb);
-                           setText(null);
-                       }
-                   };
-                   };
-                   return cell;
+    Callback<TableColumn<Event, Event>, TableCell<Event, Event>> cellFactory;
+       cellFactory = new Callback<TableColumn<Event, Event>, TableCell<Event, Event>>() {
+           @Override
+           public TableCell call(final TableColumn<Event, Event> param) {
+               final TableCell<Event, Event> cell;
+               cell = new TableCell<Event, Event>() {
                    
-               }
-           };
+                   @Override
+                   public void updateItem(Event item, boolean empty) {
+                       super.updateItem(item, empty);
+                       if (empty) {
+                           setGraphic(null);
+                           setText(null);
+                       } else {
+                           Button editBtn = new Button("Reserver");
+                        
+                          
+                               editBtn.setOnAction((ActionEvent event) -> {
+                                   
+                            eventselected = getTableView().getItems().get(getIndex());
 
-        action.setCellFactory(cellFactory);
-    }    
-    
+                                   Integer user_id= AuthService.loggedInUser.getUserId();
+                                   System.out.println("user"+user_id);
+                                   Integer event_id=getTableView().getItems().get(getIndex()).getEventId();
+                                   System.out.println("even"+event_id);
+                                   UserDAOImpl us= new UserDAOImpl();
+                                   User u1 = null;
+								try {
+									u1 = us.get(user_id);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+                                  EventDAOImp ev = new EventDAOImp();
+                                  Event e12 =ev.get(event_id);
+                       reservation r = new reservation(u1,e12);
+
+                        ReservationDAOImpl reservationService = new ReservationDAOImpl();
+
+                               try {
+                                  // System.out.println(".updateItem()"+r);
+                                   reservationService.insert(r);
+                                    sendSMS sm =new sendSMS();
+                                    sm.sendSMS();
+                                    eventselected.setEventMaxNumberParticipant(eventselected.getEventMaxNumberParticipant() -1);
+                                    System.out.println(".updateItem()0 " + eventselected.getEventMaxNumberParticipant());
+                                     if(eventselected.getEventMaxNumberParticipant()< 0 ){
+                             
+                                editBtn.setDisable(true);
+
+                          }
+                    System.out.println(".updateItem()"+ eventselected.getEventMaxNumberParticipant());
+
+                               } catch (SQLException ex) {
+                                   Logger.getLogger(EventListAccueilController.class.getName()).log(Level.SEVERE, null, ex);
+                               }
+                        
+                               }); 
+                               
+                       
+                     
+                       
+                       
+                       HBox hb = new HBox();
+                       hb.setSpacing(2);
+                       hb.getChildren().addAll(editBtn);
+                       setGraphic(hb);
+                       setText(null);
+                   }
+               };
+               };
+               return cell;
+               
+           }
+       };
+
+    action.setCellFactory(cellFactory);
+}    
+
 }
